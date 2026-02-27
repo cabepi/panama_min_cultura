@@ -11,7 +11,14 @@ const pool = new Pool({
 /**
  * Generates an HTML template for the OTP email matching the MIN CULTURA landing design.
  */
-const generateOTPEmailTemplate = (otpCode: string, expiresInMinutes: number) => {
+const generateOTPEmailTemplate = (otpCode: string, expiresInMinutes: number, type: 'registration' | 'login' = 'registration') => {
+    const actionText = type === 'login'
+        ? '<strong>iniciar sesión</strong> como usuario'
+        : '<strong>registrarte</strong> como usuario';
+    const actionContinuation = type === 'login'
+        ? 'acceso'
+        : 'registro';
+
     return `
 <!DOCTYPE html>
 <html>
@@ -105,7 +112,7 @@ const generateOTPEmailTemplate = (otpCode: string, expiresInMinutes: number) => 
         <div class="content">
             <h2 style="color: #0f2854; margin-top: 0;">Código de Verificación</h2>
             <p>Hola,</p>
-            <p>Has solicitado <strong>registrarte</strong> como usuario en el Sistema de Información Cultural de Panamá. Utiliza el siguiente código para continuar con tu registro:</p>
+            <p>Has solicitado ${actionText} en el Sistema de Información Cultural de Panamá. Utiliza el siguiente código para continuar con tu ${actionContinuation}:</p>
             
             <div class="otp-container">
                 <div class="otp-code">${otpCode}</div>
@@ -137,7 +144,7 @@ const generateNumericOTP = (): string => {
  * Generates an OTP, stores it in the database, and sends it via email.
  * Returns the UUID of the generated OTP record.
  */
-export const generateAndSendOTP = async (email: string): Promise<string> => {
+export const generateAndSendOTP = async (email: string, type: 'registration' | 'login' = 'registration'): Promise<string> => {
     const otpCode = generateNumericOTP();
     const expirationMinutes = parseInt(process.env.OTP_EXPIRATION_MINUTES || '5', 10);
 
@@ -158,7 +165,7 @@ export const generateAndSendOTP = async (email: string): Promise<string> => {
         const otpId = result.rows[0].id;
 
         // Send Email
-        const htmlBody = generateOTPEmailTemplate(otpCode, expirationMinutes);
+        const htmlBody = generateOTPEmailTemplate(otpCode, expirationMinutes, type);
         await sendEmail({
             to: email,
             subject: 'Tu Código de Verificación - Sicultura',

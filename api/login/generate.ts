@@ -24,7 +24,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
 
         // Generate and send OTP
-        const otpId = await generateAndSendOTP(email);
+        const otpId = await generateAndSendOTP(email, 'login');
 
         return res.status(200).json({
             message: 'OTP generated and sent successfully',
