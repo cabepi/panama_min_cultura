@@ -30,26 +30,26 @@ El sistema opera bajo un flujo de separación de responsabilidades estricto, ais
 
 ```mermaid
 graph TD
-    Client[Navegador del Usuario] -->|HTTP / SPA Routing| ReactUI(Capa de Presentación : React + Vite)
+    Client["Navegador del Usuario"] -->|HTTP / SPA Routing| ReactUI("Capa de Presentación : React + Vite")
     
     subgraph Frontend
-    ReactUI --> AuthCtx[AuthContext / ThemeContext]
-    ReactUI --> Pages[Vistas: Mapa, Directorio, Admin]
+    ReactUI --> AuthCtx["AuthContext / ThemeContext"]
+    ReactUI --> Pages["Vistas: Mapa, Directorio, Admin"]
     end
 
-    Pages -->|HTTP Fetch / fetch()| APIBridge{API Gateway / Vercel Edge}
+    Pages -->|HTTP Fetch| APIBridge{"API Gateway / Vercel Edge"}
 
     subgraph Infraestructura Backend
-    APIBridge -->|Local| Express(Servidor Express Local)
-    APIBridge -->|Producción| Serverless(Vercel Serverless Functions)
+    APIBridge -->|Local| Express("Servidor Express Local")
+    APIBridge -->|Producción| Serverless("Vercel Serverless Functions")
     end
 
-    Express --> Domain(Capa de Dominio)
+    Express --> Domain("Capa de Dominio")
     Serverless --> Domain
     
-    Domain --> DB_Adapter(Capa de Datos : pg driver)
+    Domain --> DB_Adapter("Capa de Datos : pg driver")
     
-    DB_Adapter -->|TCP| Postgres[(PostgreSQL Database)]
+    DB_Adapter -->|TCP| Postgres[("PostgreSQL Database")]
 ```
 
 ## Patrones de Diseño Implementados
