@@ -10,6 +10,8 @@ El formato que utilizamos se fundamenta fuertemente en [Keep a Changelog](https:
 
 ### Añadido (Added)
 - Nueva iniciativa Documentación Código (`Documentation As Code`): Adición de repositorios de infraestructura como `ARCHITECTURE.md`, `TECH_STACK.md`, `REQUIREMENTS.md`, `CONTRIBUTING.md`, `SECURITY.md`.
+- Implementación de flujos de Registro e Inicio de Sesión mediante códigos de verificación de un solo uso (OTP) al correo electrónico para mejorar la experiencia y seguridad (eliminando el uso de contraseñas locales).
+- Primer andamiaje del área administrativa (`Backoffice`) con enrutamiento protegido mediante JSON Web Tokens (JWT) y decodificación en frontend del nombre de usuario.
 - Implementación base de contexto React global `ThemeContext` y el componente individual `ThemeToggle` para controlar las variantes Claro/Oscuro en la paleta de colores.
 - Configuración fundamental `vercel.json` y `api/package.json` para facilitar un flujo nativo continuo a la infraestructura "Functions" de Vercel.
 

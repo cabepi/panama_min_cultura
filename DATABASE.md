@@ -8,15 +8,38 @@ Este modelo conceptual utiliza las convenciones de `Mermaid` para ilustrar las r
 
 ```mermaid
 erDiagram
-    USERS {
+    INTERNAL_USERS {
         uuid id PK
-        string email UK "Correo corporativo/inicio de sesión"
+        string email UK "Correo corporativo (@micultura.gob.pa)"
         string password_hash "Contraseña encriptada bcrypt"
-        string full_name "Nombre del usuario administrador"
-        string role "Rol: ADMIN, EDITOR"
+        string full_name "Nombre del funcionario / administrador"
+        string role "Rol: SUPER_ADMIN, EDITOR, REVIEWER"
         boolean is_active "Estado de la cuenta"
         timestamp created_at
         timestamp updated_at
+    }
+
+    CITIZENS {
+        uuid id PK
+        string email UK "Correo personal del ciudadano"
+        string full_name "Nombre completo"
+        string id_card UK "Cédula de identidad (Opcional/Requerido para trámites)"
+        string phone_number
+        boolean is_verified "Email verificado (Validado vía OTP)"
+        boolean authorizes_data_treatment "Aceptó uso de datos"
+        boolean accepts_terms_conditions "Aceptó Términos"
+        boolean accepts_privacy_policy "Aceptó Políticas de Privacidad"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    OTP_CODES {
+        uuid id PK
+        string email "Correo destino del código"
+        string otp_code "Código de 6 dígitos"
+        boolean is_used "Previene reutilización"
+        timestamp expires_at "Vigencia predeterminada de 5 minutos"
+        timestamp created_at
     }
 
     CULTURAL_SECTORS {
@@ -76,9 +99,11 @@ erDiagram
     }
 
     %% Relaciones
-    USERS ||--o{ CULTURAL_ENTITIES : "registra o modifica"
-    USERS ||--o{ NEWS_ARTICLES : "escribe/publica"
-    USERS ||--o{ DOCUMENTS : "sube"
+    INTERNAL_USERS ||--o{ CULTURAL_ENTITIES : "registra o aprueba"
+    INTERNAL_USERS ||--o{ NEWS_ARTICLES : "escribe/publica"
+    INTERNAL_USERS ||--o{ DOCUMENTS : "sube"
+    
+    CITIZENS ||--o{ CULTURAL_ENTITIES : "propone o reclama autoría"
     
     CULTURAL_SECTORS ||--o{ CULTURAL_ENTITIES : "agrupa (Directorio/Mapa)"
     
@@ -87,8 +112,10 @@ erDiagram
 
 ## Diccionario de Entidades Clave
 
-1. **`USERS` (Gestión de Identidad y Acceso):** 
-   - Soporta a los administradores del sistema. Almacena contraseñas seguras y asiste a la generación de JSON Web Tokens (JWT).
+1. **`INTERNAL_USERS` (Gestión Administrativa Interna):** 
+   - Soporta exclusivamente a los funcionarios del Ministerio de Cultura. Tienen roles estrictos (`SUPER_ADMIN`, `EDITOR`) y son los únicos con permisos para publicar noticias, subir documentos legales y aprobar/rechazar entidades culturales.
+2. **`CITIZENS` (Público General / Ciudadanos):**
+   - Entidad apartada para los "ciudadanos de a pie" que se registran desde el portal público. Su cuenta les permite proponer entidades culturales (Ej: Registrar su propia banda musical o teatro), reclamar la autoría de un agente existente, y realizar futuros trámites gubernamentales asociados a su Cédula.
 2. **`CULTURAL_SECTORS` (Sectores Culturales):**
    - Sirve como la tabla de catálogos estática para agrupar entidades bajo ramas específicas de arte (Música, Cine, Literatura). Soporta los carruseles de filtros.
 3. **`CULTURAL_ENTITIES` (Entidades Culturales Polimórficas):**

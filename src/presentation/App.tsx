@@ -74,6 +74,7 @@ import Statistics from './pages/Statistics';
 import MapPage from './pages/MapPage';
 import News from './pages/News';
 import About from './pages/About';
+import { BackofficeHome } from './pages/backoffice/Home';
 
 export default function App() {
     return (
@@ -107,6 +108,12 @@ export default function App() {
                                     <Dashboard />
                                 </ProtectedRoute>
                             }
+                        />
+
+                        {/* Backoffice Route */}
+                        <Route
+                            path="/backoffice"
+                            element={<BackofficeHome />}
                         />
 
                         {/* Catch all route - can be modified later to 404 */}

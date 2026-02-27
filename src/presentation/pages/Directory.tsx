@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { RegistrationModal } from '../components/RegistrationModal';
 
 const featuredData = [
     {
@@ -25,7 +26,41 @@ const featuredData = [
 
 export default function Directory() {
     const [currentFeaturedIndex, setCurrentFeaturedIndex] = useState(0);
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
+    // --- Scroll Animation Logic ---
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        elements.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, []);
+
+    // --- Category Carousel Logic ---
+    const categoryCarouselRef = useRef<HTMLDivElement>(null);
+
+    const scrollNext = useCallback(() => {
+        if (categoryCarouselRef.current) {
+            categoryCarouselRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+        }
+    }, []);
+
+    const scrollPrev = useCallback(() => {
+        if (categoryCarouselRef.current) {
+            categoryCarouselRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+        }
+    }, []);
+
+    // --- Featured Carousel Data State (Mocking Dynamic Updates) ---
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentFeaturedIndex((prev) => (prev + 1) % featuredData.length);
@@ -75,6 +110,7 @@ export default function Directory() {
                             <button id="btn-login"
                                 className="hidden sm:block text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium">Login</button>
                             <button id="btn-register"
+                                onClick={() => setIsRegisterOpen(true)}
                                 className="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/25">
                                 Registrarse
                             </button>
@@ -197,13 +233,13 @@ export default function Directory() {
 
                     <div className="relative group">
 
-                        <button id="category-prev"
+                        <button id="category-prev" onClick={scrollPrev}
                             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 opacity-100 transition-opacity z-20">
                             <span className="material-symbols-outlined text-lg">chevron_left</span>
                         </button>
 
 
-                        <div id="category-carousel"
+                        <div id="category-carousel" ref={categoryCarouselRef}
                             className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 px-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth select-none cursor-grab active:cursor-grabbing">
 
                             <button
@@ -251,7 +287,7 @@ export default function Directory() {
                         </div>
 
 
-                        <button id="category-next"
+                        <button id="category-next" onClick={scrollNext}
                             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center text-slate-500 hover:text-primary hover:bg-slate-50 opacity-100 transition-opacity z-20">
                             <span className="material-symbols-outlined text-lg">chevron_right</span>
                         </button>
@@ -880,135 +916,7 @@ export default function Directory() {
             </div>
 
 
-            <div id="register-modal" className="fixed inset-0 z-[100] hidden items-center justify-center">
-
-                <div id="register-modal-overlay"
-                    className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity opacity-0"></div>
-
-
-                <div id="register-modal-content"
-                    className="relative bg-white dark:bg-surface-dark w-full max-w-xl mx-4 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh] transform scale-95 opacity-0 transition-all duration-300 border border-slate-100 dark:border-slate-800">
-
-                    <button id="register-modal-close"
-                        className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
-                        <span className="material-symbols-outlined">close</span>
-                    </button>
-
-                    <div className="p-8">
-
-                        <div className="flex flex-col items-center justify-center mb-6">
-                            <img src="logo_micultura.png" alt="Sicultura Panamá Logo" className="h-14 w-auto mb-4 drop-shadow-sm" />
-                            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Crea tu Cuenta</h2>
-                            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 text-center">Únete a Sicultura y conecta
-                                con los recursos de Panamá.</p>
-                        </div>
-
-
-                        <form id="register-form" className="space-y-4">
-                            <div className="grid grid-cols-1 gap-4">
-                                <div>
-                                    <label htmlFor="reg-name"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre
-                                        completo *</label>
-                                    <input type="text" id="reg-name" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="Tu nombre completo" />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="reg-email"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Correo
-                                        electrónico *</label>
-                                    <input type="email" id="reg-email" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="tu@correo.com" />
-                                </div>
-                                <div>
-                                    <label htmlFor="reg-phone"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Teléfono
-                                        *</label>
-                                    <input type="tel" id="reg-phone" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="+507 0000-0000" />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="reg-password"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Contraseña
-                                        *</label>
-                                    <input type="password" id="reg-password" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="••••••••" />
-                                </div>
-                                <div>
-                                    <label htmlFor="reg-password-confirm"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Repite la
-                                        contraseña *</label>
-                                    <input type="password" id="reg-password-confirm" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="••••••••" />
-                                </div>
-                            </div>
-
-
-                            <div className="space-y-3 mt-6 pt-2">
-                                <label className="flex items-start gap-3 cursor-pointer group">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" required
-                                            className="w-4 h-4 text-primary bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-slate-800 transition-colors cursor-pointer" />
-                                    </div>
-                                    <span
-                                        className="text-xs text-slate-600 dark:text-slate-400 leading-tight group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
-                                        Autorizo al Ministerio de Cultura de Panamá a que recolecte, almacene y trate mis datos
-                                        personales, como responsable del Sistema de Información Cultural (Sicultura).
-                                    </span>
-                                </label>
-
-                                <label className="flex items-start gap-3 cursor-pointer group">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" required
-                                            className="w-4 h-4 text-primary bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-slate-800 transition-colors cursor-pointer" />
-                                    </div>
-                                    <span
-                                        className="text-xs text-slate-600 dark:text-slate-400 leading-tight group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
-                                        Confirmo que he leído en plenitud y acepto los Términos y Condiciones para el registro
-                                        de fichas en el Directorio de Sicultura.
-                                    </span>
-                                </label>
-
-                                <label className="flex items-start gap-3 cursor-pointer group">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" required
-                                            className="w-4 h-4 text-primary bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-slate-800 transition-colors cursor-pointer" />
-                                    </div>
-                                    <span
-                                        className="text-xs text-slate-600 dark:text-slate-400 leading-tight group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
-                                        Confirmo que he leído y acepto la Política de Protección de Datos Personales de
-                                        Sicultura.
-                                    </span>
-                                </label>
-                            </div>
-
-                            <button type="submit"
-                                className="w-full bg-secondary hover:bg-red-800 text-white font-bold rounded-lg px-4 py-3 mt-6 transition-colors shadow-lg shadow-secondary/30">
-                                Crear Cuenta
-                            </button>
-                        </form>
-
-
-                        <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 text-center">
-                            <p className="text-slate-600 dark:text-slate-400 text-sm">¿Ya tienes cuenta? <button type="button"
-                                id="btn-switch-to-login"
-                                className="text-primary hover:text-blue-700 font-bold ml-1 transition-colors">Inicia
-                                sesión</button></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <RegistrationModal isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
 
 
 

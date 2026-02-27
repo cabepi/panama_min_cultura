@@ -10,9 +10,9 @@ Portal web y sistema de gestión para el **Ministerio de Cultura de Panamá (MiC
 ## 🚀 Estado de Construcción
 
 Actualmente el proyecto se encuentra en la versión **0.1.0-alpha**.
-- **Frontend:** Estructura de vistas completada (Home, Directorio, Mapa, Estadísticas, Novedades, Documentos, Sobre Sicultura). Integración de Dark Mode global vía React Context.
-- **Backend:** Servicios API base configurados de forma híbrida (Express local y Serverless Functions en Vercel). Funciones de Login y Proxy estabilizadas con soporte CommonJS.
-- **Base de Datos:** Configuración inicial con PostgreSQL mapeada en la capa de datos.
+- **Frontend:** Estructura de vistas completada (Home, Directorio, Mapa, Estadísticas, Novedades, Documentos, Sobre Sicultura). Integración de Dark Mode global vía React Context y componentes de autenticación dinámica (LoginModal, RegistrationModal).
+- **Backend:** Servicios API base configurados de forma híbrida (Express local y Serverless Functions en Vercel). Funciones de Autenticación sin contraseña (OTP vía Email) y Proxy estabilizadas con soporte CommonJS. Enrutamiento del Backoffice protegido por JWT.
+- **Base de Datos:** Configuración inicial con PostgreSQL mapeada en la capa de datos. Tablas de Ciudadanos (CITIZENS) y validación de OTP (OTP_CODES) implementadas y funcionales.
 
 ## 📦 Guía Rápida de Instalación
 

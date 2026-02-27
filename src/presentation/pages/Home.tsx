@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { RegistrationModal } from '../components/RegistrationModal';
+import { LoginModal } from '../components/LoginModal';
 
 export default function Home() {
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -52,8 +56,10 @@ export default function Home() {
                         <div className="flex items-center gap-4">
                             <ThemeToggle />
                             <button id="btn-login"
+                                onClick={() => setIsLoginOpen(true)}
                                 className="hidden sm:block text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium">Login</button>
                             <button id="btn-register"
+                                onClick={() => setIsRegisterOpen(true)}
                                 className="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/25">
                                 Registrarse
                             </button>
@@ -646,209 +652,13 @@ export default function Home() {
             </footer>
 
 
-            <div id="login-modal" className="fixed inset-0 z-[100] hidden items-center justify-center">
+            <LoginModal
+                isOpen={isLoginOpen}
+                onClose={() => setIsLoginOpen(false)}
+                onSwitchToRegister={() => setIsRegisterOpen(true)}
+            />
 
-                <div id="login-modal-overlay"
-                    className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity opacity-0"></div>
-
-
-                <div id="login-modal-content"
-                    className="relative bg-white dark:bg-surface-dark w-full max-w-md mx-4 rounded-2xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 border border-slate-100 dark:border-slate-800">
-
-                    <button id="login-modal-close"
-                        className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
-                        <span className="material-symbols-outlined">close</span>
-                    </button>
-
-                    <div className="p-8">
-
-                        <div className="flex flex-col items-center justify-center mb-8">
-                            <img src="logo_micultura.png" alt="Sicultura Panamá Logo" className="h-16 w-auto mb-4 drop-shadow-sm" />
-                            <h2 id="modal-title" className="text-2xl font-bold text-slate-900 dark:text-white">Bienvenido</h2>
-                            <p id="modal-subtitle" className="text-slate-500 dark:text-slate-400 text-sm mt-1 text-center">Inicia
-                                sesión para acceder a tu perfil y recursos culturales.</p>
-                        </div>
-
-
-                        <form id="login-form" className="space-y-5 transition-all duration-300">
-                            <div>
-                                <label htmlFor="email"
-                                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Correo
-                                    Electrónico</label>
-                                <input type="email" id="email"
-                                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                    placeholder="tu@correo.com" />
-                            </div>
-                            <div id="password-field" className="transition-all duration-300 overflow-hidden">
-                                <div className="flex items-center justify-between mb-1">
-                                    <label htmlFor="password"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300">Contraseña</label>
-                                    <a href="#" id="btn-forgot-password"
-                                        className="text-sm text-primary hover:text-blue-700 transition-colors font-medium">¿Olvidaste
-                                        tu contraseña?</a>
-                                </div>
-                                <input type="password" id="password"
-                                    className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                    placeholder="••••••••" />
-                            </div>
-
-                            <button type="submit" id="btn-submit"
-                                className="w-full bg-secondary hover:bg-red-800 text-white font-bold rounded-lg px-4 py-3 mt-4 transition-colors shadow-lg shadow-secondary/30">
-                                Iniciar Sesión
-                            </button>
-
-
-                            <div id="back-to-login" className="text-center hidden mt-4">
-                                <a href="#"
-                                    className="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors flex items-center justify-center gap-1">
-                                    <span className="material-symbols-outlined text-sm">arrow_back</span>
-                                    Volver al inicio de sesión
-                                </a>
-                            </div>
-                        </form>
-
-
-                        <div id="modal-footer"
-                            className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center transition-all duration-300">
-                            <p className="text-slate-600 dark:text-slate-400 text-sm">¿No tienes cuenta? <button type="button"
-                                id="btn-switch-to-register"
-                                className="text-primary hover:text-blue-700 font-bold ml-1 transition-colors">Regístrate</button>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="register-modal" className="fixed inset-0 z-[100] hidden items-center justify-center">
-
-                <div id="register-modal-overlay"
-                    className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity opacity-0"></div>
-
-
-                <div id="register-modal-content"
-                    className="relative bg-white dark:bg-surface-dark w-full max-w-xl mx-4 rounded-2xl shadow-2xl overflow-y-auto max-h-[90vh] transform scale-95 opacity-0 transition-all duration-300 border border-slate-100 dark:border-slate-800">
-
-                    <button id="register-modal-close"
-                        className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
-                        <span className="material-symbols-outlined">close</span>
-                    </button>
-
-                    <div className="p-8">
-
-                        <div className="flex flex-col items-center justify-center mb-6">
-                            <img src="logo_micultura.png" alt="Sicultura Panamá Logo" className="h-14 w-auto mb-4 drop-shadow-sm" />
-                            <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Crea tu Cuenta</h2>
-                            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 text-center">Únete a Sicultura y conecta
-                                con los recursos de Panamá.</p>
-                        </div>
-
-
-                        <form id="register-form" className="space-y-4">
-                            <div className="grid grid-cols-1 gap-4">
-                                <div>
-                                    <label htmlFor="reg-name"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre
-                                        completo *</label>
-                                    <input type="text" id="reg-name" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="Tu nombre completo" />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="reg-email"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Correo
-                                        electrónico *</label>
-                                    <input type="email" id="reg-email" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="tu@correo.com" />
-                                </div>
-                                <div>
-                                    <label htmlFor="reg-phone"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Teléfono
-                                        *</label>
-                                    <input type="tel" id="reg-phone" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="+507 0000-0000" />
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="reg-password"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Contraseña
-                                        *</label>
-                                    <input type="password" id="reg-password" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="••••••••" />
-                                </div>
-                                <div>
-                                    <label htmlFor="reg-password-confirm"
-                                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Repite la
-                                        contraseña *</label>
-                                    <input type="password" id="reg-password-confirm" required
-                                        className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
-                                        placeholder="••••••••" />
-                                </div>
-                            </div>
-
-
-                            <div className="space-y-3 mt-6 pt-2">
-                                <label className="flex items-start gap-3 cursor-pointer group">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" required
-                                            className="w-4 h-4 text-primary bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-slate-800 transition-colors cursor-pointer" />
-                                    </div>
-                                    <span
-                                        className="text-xs text-slate-600 dark:text-slate-400 leading-tight group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
-                                        Autorizo al Ministerio de Cultura de Panamá a que recolecte, almacene y trate mis datos
-                                        personales, como responsable del Sistema de Información Cultural (Sicultura).
-                                    </span>
-                                </label>
-
-                                <label className="flex items-start gap-3 cursor-pointer group">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" required
-                                            className="w-4 h-4 text-primary bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-slate-800 transition-colors cursor-pointer" />
-                                    </div>
-                                    <span
-                                        className="text-xs text-slate-600 dark:text-slate-400 leading-tight group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
-                                        Confirmo que he leído en plenitud y acepto los Términos y Condiciones para el registro
-                                        de fichas en el Directorio de Sicultura.
-                                    </span>
-                                </label>
-
-                                <label className="flex items-start gap-3 cursor-pointer group">
-                                    <div className="flex items-center h-5">
-                                        <input type="checkbox" required
-                                            className="w-4 h-4 text-primary bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-slate-800 transition-colors cursor-pointer" />
-                                    </div>
-                                    <span
-                                        className="text-xs text-slate-600 dark:text-slate-400 leading-tight group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">
-                                        Confirmo que he leído y acepto la Política de Protección de Datos Personales de
-                                        Sicultura.
-                                    </span>
-                                </label>
-                            </div>
-
-                            <button type="submit"
-                                className="w-full bg-secondary hover:bg-red-800 text-white font-bold rounded-lg px-4 py-3 mt-6 transition-colors shadow-lg shadow-secondary/30">
-                                Crear Cuenta
-                            </button>
-                        </form>
-
-
-                        <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 text-center">
-                            <p className="text-slate-600 dark:text-slate-400 text-sm">¿Ya tienes cuenta? <button type="button"
-                                id="btn-switch-to-login"
-                                className="text-primary hover:text-blue-700 font-bold ml-1 transition-colors">Inicia
-                                sesión</button></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <RegistrationModal isOpen={isRegisterOpen} onClose={() => setIsRegisterOpen(false)} />
 
 
 

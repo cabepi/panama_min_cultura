@@ -13,6 +13,10 @@ Actualmente, solo las construcciones consolidadas marcadas como **Último Releas
 
 ## Cómo Reportar una Vulnerabilidad
 
+> [!NOTE]
+> **Arquitectura Passwordless (Sin Contraseña):**  
+> Para mitigar vectores severos de filtrado masivo ("Data Breaches"), robos por fuerza bruta y reciclamiento de contraseñas cruzadas, este proyecto ha optado desde la base (`v0.1.0`) por eliminar el almacenamiento local de cadenas estáticas e `hashes` bcrypt. Toda la identificación y autorización del ciudadano o administradores es despachada exclusivamente mediante envío efímero de Correos de Contraseña Única (Código OTP) e intercambio directo por JSON Web Tokens temporales, caducando a los 5 minutos y 24 horas, respectivamente.
+
 Si un experto tecnológico, investigador de ciberseguridad o un usuario identifica deficiencias potenciales u hoyos de explotación (tales como `Inyección SQL`, vulneración `Cross-Site Scripting XSS`, fugas de Expiración en tokens JWT, saltos y falsificaciones `CSRF`), **solicitamos encarecidamente NO generar "Issues" abiertos dentro del rastreador público del repositorio.**
 
 Procedimiento de reporte oficial:
