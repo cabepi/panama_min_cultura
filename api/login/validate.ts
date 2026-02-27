@@ -9,7 +9,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
-        const { otpId, email, otpCode } = req.body;
+        let body = req.body;
+        if (typeof body === 'string') {
+            try { body = JSON.parse(body); } catch (e) { }
+        }
+        const { otpId, email, otpCode } = body || {};
 
         if (!otpId || !email || !otpCode) {
             return res.status(400).json({ error: 'otpId, email, and otpCode are required' });

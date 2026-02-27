@@ -9,16 +9,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
+        let body = req.body;
+        if (typeof body === 'string') {
+            try { body = JSON.parse(body); } catch (e) { }
+        }
         const {
-            otpId,
-            email,
-            otpCode,
-            full_name,
-            phone_number,
-            authorizes_data_treatment,
-            accepts_terms_conditions,
-            accepts_privacy_policy
-        } = req.body;
+            otpId, email, otpCode,
+            full_name, phone_number,
+            authorizes_data_treatment, accepts_terms_conditions, accepts_privacy_policy
+        } = body || {};
 
         if (!otpId || !email || !otpCode || !full_name) {
             return res.status(400).json({ error: 'otpId, email, otpCode, and full_name are required' });

@@ -8,7 +8,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
-        const { email } = req.body;
+        let body = req.body;
+        if (typeof body === 'string') {
+            try { body = JSON.parse(body); } catch (e) { }
+        }
+        const { email } = body || {};
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
         }
