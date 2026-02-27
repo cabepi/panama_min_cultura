@@ -58,5 +58,14 @@ El código se organiza siguiendo principios de Clean Architecture:
 - `src/server/`: Servidor Express de desarrollo local.
 - `api/`: Funciones Serverless nativas para la plataforma de Vercel.
 
+### Documentación del Proyecto
+- [Arquitectura Detallada (ARCHITECTURE.md)](./ARCHITECTURE.md)
+- [Esquema de Base de Datos (DATABASE.md)](./DATABASE.md)
+- [Stack Tecnológico (TECH_STACK.md)](./TECH_STACK.md)
+- [Requerimientos (REQUIREMENTS.md)](./REQUIREMENTS.md)
+- [Guía de Contribución (CONTRIBUTING.md)](./CONTRIBUTING.md)
+- [Políticas de Seguridad (SECURITY.md)](./SECURITY.md)
+- [Registro de Cambios (CHANGELOG.md)](./CHANGELOG.md)
+
 ---
 *Desarrollado para el Ministerio de Cultura de Panamá.*
