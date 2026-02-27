@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateAndSendOTP } from '../../src/server/services/otpService';
-import { query } from '../../src/data/db';
+import { generateAndSendOTP } from '../_lib/services/otpService.js';
+import { query } from '../_lib/data/db.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') {

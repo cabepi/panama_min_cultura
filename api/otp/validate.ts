@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { validateOTP } from '../../src/server/services/otpService';
+import { validateOTP } from '../_lib/services/otpService.js';
 import jwt from 'jsonwebtoken';
-import { query } from '../../src/data/db';
+import { query } from '../_lib/data/db.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') {

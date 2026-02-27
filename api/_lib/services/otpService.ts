@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
-import { sendEmail } from './emailService';
+import { sendEmail } from './emailService.js';
 
 dotenv.config();
 
