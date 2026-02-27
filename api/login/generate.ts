@@ -1,6 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateAndSendOTP } from '../../src/server/services/otpService';
-import { query } from '../../src/data/db';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') {
@@ -8,6 +6,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
+        const { generateAndSendOTP } = await import('../../src/server/services/otpService');
+        const { query } = await import('../../src/data/db');
         let body = req.body;
         if (typeof body === 'string') {
             try { body = JSON.parse(body); } catch (e) { }
