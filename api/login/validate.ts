@@ -7,8 +7,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
-        const { validateOTP } = await import('../../src/server/services/otpService');
-        const { query } = await import('../../src/data/db');
+        const { validateOTP } = await import('../../src/server/services/otpService.js');
+        const { query } = await import('../../src/data/db.js');
         let body = req.body;
         if (typeof body === 'string') {
             try { body = JSON.parse(body); } catch (e) { }
