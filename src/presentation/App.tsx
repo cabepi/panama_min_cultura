@@ -97,7 +97,7 @@ export default function App() {
                         <Route path="/estadisticas" element={<Statistics />} />
                         <Route path="/mapa" element={<MapPage />} />
                         <Route path="/novedades" element={<News />} />
-                        <Route path="/sobre_sicultura" element={<About />} />
+                        <Route path="/sobre" element={<About />} />
 
                         {/* Admin/Protected Routes */}
                         <Route
