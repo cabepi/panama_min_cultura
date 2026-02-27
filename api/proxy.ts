@@ -6,7 +6,7 @@ export default async function handler(req: Request, res: Response) {
     }
 
     try {
-        const { targetUrl, method = 'GET', headers = {}, body } = req.body;
+        const { targetUrl, method = 'GET', headers = {}, body } = req.body || {};
 
         if (!targetUrl) {
             return res.status(400).json({ error: 'targetUrl is required' });

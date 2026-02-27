@@ -8,7 +8,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
 
     // Mock authentication logic for baseline
     if (email === 'admin@cultura.gob.pa' && password === 'admin') {
