@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
     useEffect(() => {
@@ -28,22 +29,22 @@ export default function Home() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
 
-                        <a href="index.html"
+                        <Link to="/"
                             className="flex-shrink-0 flex items-center gap-2 cursor-pointer transition-transform hover:scale-105">
                             <img src="logo_micultura.png" alt="Sicultura Panamá Logo" className="h-12 w-auto" />
-                        </a>
+                        </Link>
 
                         <nav className="hidden md:flex space-x-8">
-                            <a className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
-                                href="directorio.html">Directorio</a>
-                            <a className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
-                                href="mapa.html">Mapa</a>
-                            <a className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
-                                href="estadisticas.html">Estadísticas</a>
-                            <a className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
-                                href="novedades.html">Novedades</a>
-                            <a className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
-                                href="documentos.html">Documentos</a>
+                            <Link className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
+                                to="/directorio">Directorio</Link>
+                            <Link className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
+                                to="/mapa">Mapa</Link>
+                            <Link className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
+                                to="/estadisticas">Estadísticas</Link>
+                            <Link className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
+                                to="/novedades">Novedades</Link>
+                            <Link className="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
+                                to="/documentos">Documentos</Link>
                         </nav>
 
 
@@ -308,11 +309,11 @@ export default function Home() {
                             <p className="text-slate-500 dark:text-slate-400 mt-2">Mantente al tanto de las noticias y convocatorias
                                 culturales.</p>
                         </div>
-                        <a className="hidden sm:flex items-center text-primary font-semibold hover:text-blue-700 transition-colors"
-                            href="novedades.html">
+                        <Link className="hidden sm:flex items-center text-primary font-semibold hover:text-blue-700 transition-colors"
+                            to="/novedades">
                             Ver todas las noticias
                             <span className="material-symbols-outlined ml-1 text-sm">arrow_forward</span>
-                        </a>
+                        </Link>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -412,10 +413,10 @@ export default function Home() {
                     </div>
 
 
-                    <a href="novedades.html"
+                    <Link to="/novedades"
                         className="flex sm:hidden w-full mt-6 justify-center items-center py-3 px-4 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white font-bold shadow-sm hover:shadow-md transition-all active:scale-95">
                         Ver todas las noticias
-                    </a>
+                    </Link>
                 </div>
 
                 <div
@@ -525,10 +526,10 @@ export default function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
                         <div className="flex flex-col gap-6">
-                            <a href="index.html"
+                            <Link to="/"
                                 className="flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 w-max">
                                 <img src="logo_micultura.png" alt="Sicultura Panamá Logo" className="h-12 w-auto" />
-                            </a>
+                            </Link>
                             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
                                 Sistema de Información Cultural de Panamá. Un proyecto del Ministerio de Cultura para conectar y
                                 promover nuestra riqueza cultural.
@@ -590,25 +591,25 @@ export default function Home() {
                         <div>
                             <h3 className="font-bold text-slate-900 dark:text-white mb-6">Explora</h3>
                             <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400">
-                                <li><a className="hover:text-primary transition-colors" href="directorio.html">Manifestaciones
-                                    Culturales</a></li>
-                                <li><a className="hover:text-primary transition-colors" href="mapa.html">Espacios y Museos</a></li>
-                                <li><a className="hover:text-primary transition-colors" href="directorio.html">Agentes
-                                    Culturales</a></li>
-                                <li><a className="hover:text-primary transition-colors" href="novedades.html">Eventos y
-                                    Festivales</a></li>
+                                <li><Link className="hover:text-primary transition-colors" to="/directorio">Manifestaciones
+                                    Culturales</Link></li>
+                                <li><Link className="hover:text-primary transition-colors" to="/mapa">Espacios y Museos</Link></li>
+                                <li><Link className="hover:text-primary transition-colors" to="/directorio">Agentes
+                                    Culturales</Link></li>
+                                <li><Link className="hover:text-primary transition-colors" to="/novedades">Eventos y
+                                    Festivales</Link></li>
                             </ul>
                         </div>
 
                         <div>
                             <h3 className="font-bold text-slate-900 dark:text-white mb-6">Recursos</h3>
                             <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400">
-                                <li><a className="hover:text-primary transition-colors" href="documentos.html">Documentos y
-                                    Leyes</a></li>
-                                <li><a className="hover:text-primary transition-colors" href="novedades.html">Convocatorias
-                                    Abiertas</a></li>
-                                <li><a className="hover:text-primary transition-colors" href="estadisticas.html">Estadísticas
-                                    Culturales</a></li>
+                                <li><Link className="hover:text-primary transition-colors" to="/documentos">Documentos y
+                                    Leyes</Link></li>
+                                <li><Link className="hover:text-primary transition-colors" to="/novedades">Convocatorias
+                                    Abiertas</Link></li>
+                                <li><Link className="hover:text-primary transition-colors" to="/estadisticas">Estadísticas
+                                    Culturales</Link></li>
                                 <li><a className="hover:text-primary transition-colors" href="#">Mapa del Sitio</a></li>
                             </ul>
                         </div>
@@ -641,8 +642,8 @@ export default function Home() {
                             <a className="hover:text-slate-900 dark:hover:text-white transition-colors" href="#">Privacidad</a>
                             <a className="hover:text-slate-900 dark:hover:text-white transition-colors" href="#">Términos</a>
                             <a className="hover:text-slate-900 dark:hover:text-white transition-colors" href="#">Accesibilidad</a>
-                            <a className="hover:text-slate-900 dark:hover:text-white transition-colors"
-                                href="sobre_sicultura.html">Sobre Sicultura</a>
+                            <Link className="hover:text-slate-900 dark:hover:text-white transition-colors"
+                                to="/sobre">Sobre Sicultura</Link>
                         </div>
                     </div>
                 </div>
