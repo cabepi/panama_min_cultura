@@ -65,12 +65,52 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return isAuthenticated ? children : <Login />;
 };
 
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
+import Directory from './pages/Directory';
+import Documents from './pages/Documents';
+import Statistics from './pages/Statistics';
+import MapPage from './pages/MapPage';
+import News from './pages/News';
+import About from './pages/About';
+
 export default function App() {
     return (
         <AuthProvider>
-            <ProtectedRoute>
-                <Dashboard />
-            </ProtectedRoute>
+            <BrowserRouter>
+                <Routes>
+                    {/* Public Routes */}
+                    <Route path="/" element={<Home />} />
+                    <Route path="/index.html" element={<Navigate to="/" replace />} />
+                    <Route path="/directorio.html" element={<Directory />} />
+                    <Route path="/documentos.html" element={<Documents />} />
+                    <Route path="/estadisticas.html" element={<Statistics />} />
+                    <Route path="/mapa.html" element={<MapPage />} />
+                    <Route path="/novedades.html" element={<News />} />
+                    <Route path="/sobre_sicultura.html" element={<About />} />
+
+                    {/* Backward compatibility for friendly URLs */}
+                    <Route path="/directorio" element={<Directory />} />
+                    <Route path="/documentos" element={<Documents />} />
+                    <Route path="/estadisticas" element={<Statistics />} />
+                    <Route path="/mapa" element={<MapPage />} />
+                    <Route path="/novedades" element={<News />} />
+                    <Route path="/sobre_sicultura" element={<About />} />
+
+                    {/* Admin/Protected Routes */}
+                    <Route
+                        path="/admin"
+                        element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Catch all route - can be modified later to 404 */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </BrowserRouter>
         </AuthProvider>
     );
 }
