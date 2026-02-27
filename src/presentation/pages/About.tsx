@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 export default function About() {
     useEffect(() => {
@@ -51,12 +52,7 @@ export default function About() {
 
 
                         <div className="flex items-center gap-4">
-                            <button id="theme-toggle"
-                                className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300"
-                                aria-label="Toggle Dark Mode">
-                                <span id="theme-toggle-light-icon" className="material-symbols-outlined hidden">light_mode</span>
-                                <span id="theme-toggle-dark-icon" className="material-symbols-outlined">dark_mode</span>
-                            </button>
+                            <ThemeToggle />
                             <button id="btn-login"
                                 className="hidden sm:block text-slate-600 dark:text-slate-300 hover:text-primary text-sm font-medium">Login</button>
                             <button id="btn-register"

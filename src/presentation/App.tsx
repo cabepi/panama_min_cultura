@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Dashboard from './pages/Dashboard';
 
 
@@ -77,40 +78,43 @@ import About from './pages/About';
 export default function App() {
     return (
         <AuthProvider>
-            <BrowserRouter>
-                <Routes>
-                    {/* Public Routes */}
-                    <Route path="/" element={<Home />} />
-                    <Route path="/index.html" element={<Navigate to="/" replace />} />
-                    <Route path="/directorio.html" element={<Directory />} />
-                    <Route path="/documentos.html" element={<Documents />} />
-                    <Route path="/estadisticas.html" element={<Statistics />} />
-                    <Route path="/mapa.html" element={<MapPage />} />
-                    <Route path="/novedades.html" element={<News />} />
-                    <Route path="/sobre_sicultura.html" element={<About />} />
+            <ThemeProvider>
+                <BrowserRouter>
+                    <Routes>
+                        {/* Public Routes */}
+                        <Route path="/" element={<Home />} />
+                        <Route path="/index.html" element={<Navigate to="/" replace />} />
+                        <Route path="/directorio.html" element={<Directory />} />
+                        <Route path="/documentos.html" element={<Documents />} />
+                        <Route path="/estadisticas.html" element={<Statistics />} />
+                        <Route path="/mapa.html" element={<MapPage />} />
+                        <Route path="/novedades.html" element={<News />} />
+                        <Route path="/sobre_sicultura.html" element={<About />} />
 
-                    {/* Backward compatibility for friendly URLs */}
-                    <Route path="/directorio" element={<Directory />} />
-                    <Route path="/documentos" element={<Documents />} />
-                    <Route path="/estadisticas" element={<Statistics />} />
-                    <Route path="/mapa" element={<MapPage />} />
-                    <Route path="/novedades" element={<News />} />
-                    <Route path="/sobre_sicultura" element={<About />} />
+                        {/* Backward compatibility for friendly URLs */}
+                        <Route path="/directorio" element={<Directory />} />
+                        <Route path="/documentos" element={<Documents />} />
+                        <Route path="/estadisticas" element={<Statistics />} />
+                        <Route path="/mapa" element={<MapPage />} />
+                        <Route path="/novedades" element={<News />} />
+                        <Route path="/sobre_sicultura" element={<About />} />
 
-                    {/* Admin/Protected Routes */}
-                    <Route
-                        path="/admin"
-                        element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        }
-                    />
+                        {/* Admin/Protected Routes */}
+                        <Route
+                            path="/admin"
+                            element={
+                                <ProtectedRoute>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            }
+                        />
 
-                    {/* Catch all route - can be modified later to 404 */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            </BrowserRouter>
+                        {/* Catch all route - can be modified later to 404 */}
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                </BrowserRouter>
+            </ThemeProvider>
         </AuthProvider>
     );
 }
+
