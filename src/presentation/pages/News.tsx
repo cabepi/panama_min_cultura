@@ -2,6 +2,27 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function News() {
+    // --- Scroll Animation Logic ---
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Ensure the animation only runs once per element
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        elements.forEach((el) => observer.observe(el));
+
+        return () => {
+            elements.forEach((el) => observer.unobserve(el));
+            observer.disconnect();
+        };
+    }, []);
+
     // --- Category Carousel Logic ---
     const carouselRef = useRef<HTMLDivElement>(null);
     const [isDown, setIsDown] = useState(false);
