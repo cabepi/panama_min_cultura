@@ -1,73 +1,62 @@
-# React + TypeScript + Vite
+# Ministerio de Cultura de Panamá
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Build Status](https://img.shields.io/badge/status-0.1.0--alpha-blue)
+![React](https://img.shields.io/badge/React-19.2.0-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-7.3.1-646CFF?logo=vite&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5.2.1-white?logo=express&logoColor=black)
 
-Currently, two official plugins are available:
+Portal web y sistema de gestión para el **Ministerio de Cultura de Panamá (MiCultura)**. Esta plataforma integra un directorio cultural, mapas interactivos, visualización de estadísticas, gestión documental y un panel de administración seguro administrado mediante Clean Architecture.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Estado de Construcción
 
-## React Compiler
+Actualmente el proyecto se encuentra en la versión **0.1.0-alpha**.
+- **Frontend:** Estructura de vistas completada (Home, Directorio, Mapa, Estadísticas, Novedades, Documentos, Sobre Sicultura). Integración de Dark Mode global vía React Context.
+- **Backend:** Servicios API base configurados de forma híbrida (Express local y Serverless Functions en Vercel). Funciones de Login y Proxy estabilizadas con soporte CommonJS.
+- **Base de Datos:** Configuración inicial con PostgreSQL mapeada en la capa de datos.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📦 Guía Rápida de Instalación
 
-## Expanding the ESLint configuration
+### Prerrequisitos
+- Node.js (v18 o superior recomendado)
+- PostgreSQL (para la base de datos local)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Configuración del Entorno local
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/cabepi/panama_min_cultura.git
+   cd panama_min_cultura
+   ```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Configura las variables de entorno. Copia el archivo de ejemplo y ajusta los valores:
+   ```bash
+   cp .env.example .env
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🛠 Comandos de Desarrollo
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+El proyecto está configurado para ejecutar de forma concurrente el frontend (Vite) y el backend local (Express) con un solo comando:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Iniciar frontend y backend en entorno de desarrollo (con recarga en vivo)
+npm run dev
+
+# Compilar para producción (TypeScript + Vite build)
+npm run build
+
+# Previsualizar el build de producción localmente
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📚 Estructura Principal
+El código se organiza siguiendo principios de Clean Architecture:
+- `src/presentation/`: Componentes de React, Páginas, Contextos de estado global (`Auth`,`Theme`).
+- `src/domain/`: Lógica de negocio y definiciones de entidades TypeScript.
+- `src/data/`: Acceso a la base de datos y servicios externos.
+- `src/server/`: Servidor Express de desarrollo local.
+- `api/`: Funciones Serverless nativas para la plataforma de Vercel.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+*Desarrollado para el Ministerio de Cultura de Panamá.*
